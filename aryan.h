@@ -17,14 +17,14 @@
     // To print array of strings in a visually readable format
  * ? String Split
  * ! void explodeStr(char string[], char divider, int _maxLen, char strArr[][_maxLen])
-    //To split the string into an array of strings
+    // To split the string into an array of strings
  * ! int wordCount(char string[], char divider)
-    //total no of words seperated by this character (specified by divider)
+    // total no of words separated by this character (specified by divider)
  * ? Sort
  * ! void sortIntArr(int size, int array[], int ascending)
-    //to Sort the int array in ascending order or descending order
+    // to Sort the int array in ascending order or descending order
  * ! void sortStrArr(int size, int _maxLen, char data[][_maxLen])
-    //to Sort the string array in alphabetical order
+    // to Sort the string array in alphabetical order
  * ? String Modify
  * ! void removeWord(int _maxLen, char str[_maxLen], char word[_maxLen])
     // to remove a word from a sentence
