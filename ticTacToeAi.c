@@ -11,10 +11,6 @@
 #define true 1
 #define false 0
 
-typedef struct Move{
-    int row, col;
-}Move;
-
 const int WINNING_COMBINATIONS[8][3] = {
     {0, 1, 2},
     {3, 4, 5},
