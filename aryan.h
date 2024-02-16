@@ -1,36 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string.h> //!implement
 #include <ctype.h>
-/**
- * * _maxLen = maximum no. of characters in that char array
- * * size = maximum no. of items in that array
- * * r, c : to specify row and column
- * * divider = character that split the string (eg: ' ', ':', etc.)
- * * ascending: 0 for False 1 for True
- * ? Echo
- * ! void echoArr(int size, int array[])
-    // To print Array in a visually readable format 
- * ! void echoMat(int r, int c, int matrix[r][c]) 
-    // To print Matrix in a visually readable format
- * ! void echoStrArr(int size, int _maxLen, char array[][_maxLen])
-    // To print array of strings in a visually readable format
- * ? String Split
- * ! void explodeStr(char string[], char divider, int _maxLen, char strArr[][_maxLen])
-    // To split the string into an array of strings
- * ! int wordCount(char string[], char divider)
-    // total no of words separated by this character (specified by divider)
- * ? Sort
- * ! void sortIntArr(int size, int array[], int ascending)
-    // to Sort the int array in ascending order or descending order
- * ! void sortStrArr(int size, int _maxLen, char data[][_maxLen])
-    // to Sort the string array in alphabetical order
- * ? String Modify
- * ! void removeWord(int _maxLen, char str[_maxLen], char word[_maxLen])
-    // to remove a word from a sentence
- * ! void titleStr(char string[])
-    // to title case the string (eg: bill gates -> Bill Gates)
-*/
+#include <stdbool.h> //!Implement
+#include <time.h> //! Implement
+
+#define true 1
+#define false 0
+#define and &&
+#define or ||
+#define bool _Bool
+#define MIN(x, y) (x<y?x:y)
+#define MAX(x, y) (x>y?x:y)
+#define print(...)\
+    printf(__VA_ARGS__)
+#define TIME() (__TIME__)
+#define DATE() (__DATE__)
 
 void echoArr(int size, int array[]){
     printf("[%d", array[0]);
