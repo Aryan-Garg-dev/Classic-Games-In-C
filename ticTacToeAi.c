@@ -3,6 +3,8 @@
 #include <conio.h>
 #include <limits.h>
 #include <ctype.h>
+#include <time.h>
+#include <windows.h>
 
 #define MAX(a, b) (a>b?a:b)
 #define MIN(a, b) (a<b?a:b)
@@ -12,14 +14,9 @@
 #define false 0
 
 const int WINNING_COMBINATIONS[8][3] = {
-    {0, 1, 2},
-    {3, 4, 5},
-    {6, 7, 8},
-    {0, 3, 6},
-    {1, 4, 7},
-    {2, 5, 8},
-    {0, 4, 8},
-    {2, 4, 6},
+    {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, //Row
+    {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, //Column
+    {0, 4, 8}, {2, 4, 6} //Diagonal
 };
 
 char board[3][3]; 
@@ -34,11 +31,11 @@ const int SPACE = 32;
 
 //draw functions
 void putPieces(int row, int col){
-    char boardLocation = board[row][col];
-    if (boardLocation==computer){
-        printf("\033[1;31m%c\033[0m", boardLocation);
-    } else if (boardLocation==player) {
-        printf("\033[1;33m%c\033[0m", boardLocation);
+    char boardChar = board[row][col];
+    if (boardChar==computer){
+        printf("\033[1;31m%c\033[0m", boardChar);
+    } else if (boardChar==player) {
+        printf("\033[1;33m%c\033[0m", boardChar);
     } else {
         int pieceLocation = 3*row+col;
         printf("%c", (char)pieceLocation+48);
@@ -46,7 +43,7 @@ void putPieces(int row, int col){
 }
 
 void drawBoard(){
-    printf("Score: %d\n", score);
+    printf("\033[0;34mScore:\033[0m %d\n", score);
     printf("#-----------#\n");
     for (int i = 0; i < 3; i++){
         for (int j = 0; j < 3; j++){
@@ -78,7 +75,7 @@ void startGame(){
     printf("\033[1;34m");
     drawBoard();
     printf("\033[0m\n");
-    printf("Press ENTER to start game\n");
+    printf("Press \033[0;34mENTER\033[0m to start game\n");
     char ch;
     if (kbhit){
         ch = getch();
@@ -101,8 +98,8 @@ void resetGame(){
 
 void gameMenu(){
     printf("\n");
-    printf("Enter \033[0;34mESC\033[0m key again to exit the game\n");
-    printf("Enter \033[0;34mSPACE\033[0m key to reset the game\n");
+    printf("Press \033[0;34mESC\033[0m key to exit the game\n");
+    printf("Press \033[0;34mSPACE\033[0m key to start new game\n");
     char ch;
     if (kbhit){
         ch = getch();
@@ -113,6 +110,9 @@ void gameMenu(){
         } else if ((int)ch==ESC){
             gameOn = false;
             exit(0);
+        } else {
+            printf("Invalid Key Pressed. Try Again...!\n");
+            gameMenu();
         }
     }
 }
@@ -185,7 +185,7 @@ int evaluate(){
 //minimax() // player->Maximiser computer->Minimiser
 int minimax(int depth, int isPlayer){
     int score = evaluate();
-    if (score == 10 || score == -10){
+    if (score == 10 or score == -10){
         return score;
     }
     if (!isMovesLeft()){
@@ -271,7 +271,7 @@ void main(){
                     gameMenu();
                     continue;
                     illegal = false;
-                } else if (!isdigit(input) || !isdigit(board[move/3][move%3])){
+                } else if (!isdigit(input) or !isdigit(board[move/3][move%3])){
                     printf("\033[0;36mIllegal Move\033[0m\n");
                 } else {
                     updateBoard(move, player);
@@ -279,7 +279,13 @@ void main(){
                 }
             }
         } else {
+            time_t timeTaken, currTime; //* For uniform response time 
+            time(&timeTaken);
             int move = getTheBestMove();
+            time(&currTime);
+            if (difftime(currTime, timeTaken)<0.5){
+                Sleep(500-difftime(currTime, timeTaken)*1000); //* (Better Feedback)
+            }
             updateBoard(move, computer);
         }
         char piece = (playerTurn)?player:computer;
@@ -304,6 +310,5 @@ void main(){
                 gameMenu();
             }
         }
-    }
-    
+    }  
 }
