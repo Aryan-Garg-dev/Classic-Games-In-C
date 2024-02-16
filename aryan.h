@@ -17,6 +17,7 @@
 #define TIME() (__TIME__)
 #define DATE() (__DATE__)
 
+//To print an array
 void echoArr(int size, int array[]){
     printf("[%d", array[0]);
     for (int i = 1; i < size; i++){
@@ -24,7 +25,7 @@ void echoArr(int size, int array[]){
     }
     printf("]\n");
 }
-
+//To print a matrix
 void echoMat(int r, int c, int matrix[r][c]){
     for (int j = 0; j < r; j++){
         printf("[%d", matrix[j][0]);
@@ -36,6 +37,7 @@ void echoMat(int r, int c, int matrix[r][c]){
     printf("\n");
 }
 
+//To print a string array
 void echoStrArr(int size, int _maxLen, char array[][_maxLen]){
     printf("[%s", array[0]);
     for (int i = 1; i < size; i++){
@@ -44,6 +46,7 @@ void echoStrArr(int size, int _maxLen, char array[][_maxLen]){
     printf("]\n");
 }
 
+//To split a string
 void explodeStr(char string[], char divider, int _maxLen, char strArr[][_maxLen]){
     int start = 0, counter = 0;
     for (int i = 0; string[i] != '\0'; i++){
@@ -62,6 +65,7 @@ void explodeStr(char string[], char divider, int _maxLen, char strArr[][_maxLen]
     }
 }
 
+//To count the number of words in a string
 int wordCount(char string[], char divider){
     int count = 1;
     for (int i = 0; string[i]!='\0'; i++){
@@ -72,6 +76,7 @@ int wordCount(char string[], char divider){
     return count;
 }
 
+//To sort an Integer array
 void sortIntArr(int size, int array[], int ascending){
     for (int i = 0; i < size; i++){
         for (int j = i + 1; j < size; j++){
@@ -92,6 +97,7 @@ void sortIntArr(int size, int array[], int ascending){
     }
 }
 
+//To sort an array of strings
 void sortStrArr(int size, int _maxLen, char data[][_maxLen]){
     char temp[_maxLen];
     for (int i = 0; i < size; i++){
@@ -105,6 +111,7 @@ void sortStrArr(int size, int _maxLen, char data[][_maxLen]){
     }
 }
 
+// To remove word from a string
 void removeWord(int _maxLen, char str[_maxLen], char word[_maxLen]){
     int count = 0, start = 0, counter = 0;
     char temp[_maxLen], newStr[_maxLen];
@@ -133,6 +140,7 @@ void removeWord(int _maxLen, char str[_maxLen], char word[_maxLen]){
     }
 }
 
+// To titlecase a string
 void titleStr(char string[]){
     string[0] = toupper(string[0]);
     for (int i = 0; string[i]!='\0';i++){
