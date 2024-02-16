@@ -29,9 +29,21 @@ void setUpBoard(char matrix[3][3]){
 
 void echo(char matrix[3][3]){
     for (int j = 0; j < 3; j++){
-        printf("[%c", matrix[j][0]);
+        if (matrix[j][0]==circle){
+                printf("[\033[1;33m%c\033[0m", matrix[j][0]);
+            } else if (matrix[j][0]==cross) {
+                printf("[\033[1;31m%c\033[0m", matrix[j][0]);
+            } else {
+                printf("[%c", matrix[j][0]);
+            }
         for (int i = 1; i < 3; i++){
-            printf(", %c", matrix[j][i]);
+            if (matrix[j][i]==circle){
+                printf(", \033[1;33m%c\033[0m", matrix[j][i]);
+            } else if (matrix[j][i]==cross) {
+                printf(", \033[1;31m%c\033[0m", matrix[j][i]);
+            } else {
+                printf(", %c", matrix[j][i]);
+            }
         }
         printf("]\n");
     }
@@ -75,7 +87,7 @@ void checkWin(){
             }
         }
         if (hasWon){
-            printf("%c wins\n\n", check);
+            printf("\033[1;34m%c wins\033[0m\n\n", check);
             gameOn = 0;
             break;
         }
@@ -100,9 +112,9 @@ int main(){
     echo(board);
     while (gameOn){
         if (circleTurn){
-            printf("O: ");
+            printf("\033[1;33mO: \033[0m");
         } else {
-            printf("X: ");
+            printf("\033[1;31mX: \033[0m");
         }
         scanf("%d", &move);
         updateBoard(move);
