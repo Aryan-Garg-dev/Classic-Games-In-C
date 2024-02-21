@@ -29,7 +29,7 @@ Snake is a classic arcade game where the player controls a snake that moves arou
 3. Aim to eat as much food as possible without colliding with the snake's own body or the borders.
 4. Enjoy playing Snake!
 
-##Tetris in C: (CLI)
+## Tetris in C: (CLI)
 
 This C program implements the classic game Tetris in a console interface. Here's a concise overview:
 
