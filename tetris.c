@@ -8,7 +8,7 @@
 #define boardWidth 16
 #define boardHeight 20
 #define nextBoardSize 4
-#define sleepDuration 50
+#define sleepDuration 100
 
 typedef struct loc{
     int index, nextIndex;
