@@ -1,4 +1,4 @@
-## Classic Games Repository
+## Classic Games 
 ## Tic-Tac-Toe (Challenge: You can not beat the AI!!!)
 
 Tic-Tac-Toe is a classic two-player game where players take turns marking spaces in a 3x3 grid, attempting to be the first to form a horizontal, vertical, or diagonal line of their symbol ('X' or 'O').
