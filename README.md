@@ -28,3 +28,26 @@ Snake is a classic arcade game where the player controls a snake that moves arou
    - **X**: Quit the game
 3. Aim to eat as much food as possible without colliding with the snake's own body or the borders.
 4. Enjoy playing Snake!
+
+**Tetris in C: (CLI)**
+
+This C program implements the classic game Tetris in a console interface. Here's a concise overview:
+
+1. **Game Basics**:
+   - Follows standard Tetris rules: pieces fall from the top, players rotate and move them to create solid rows.
+   - Completed rows clear, earning points.
+
+2. **Structure**:
+   - Uses structs to track piece positions and rotations.
+   - Piece shapes defined as character arrays, game board as a 2D array.
+
+3. **Functionality**:
+   - Initializes with a random piece falling.
+   - Players control with keyboard inputs: rotate (W/w), left (A/a), right (D/d), down (S/s).
+   - Ends when pieces reach the top of the screen.
+
+4. **Compilation and Execution**:
+   - Compiles with any C compiler supporting standard libraries.
+   - Windows requires `conio.h` and `windows.h` for input and console manipulation.
+   - Unix-like systems may need adjustments.
+
