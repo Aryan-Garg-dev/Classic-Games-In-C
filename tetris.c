@@ -8,8 +8,10 @@
 #define boardWidth 16
 #define boardHeight 20
 #define nextBoardSize 4
-#define sleepDuration 150
-#define controlSpeed 25
+
+#define sleepDuration 200
+#define downSpeed 150
+#define controlSpeed 0
 
 typedef struct loc{
     int index, nextIndex;
@@ -334,7 +336,7 @@ void stopAtBottom(){
 void moveDown(){
     deleteOldConfigurations();
     current.pos+=boardWidth;
-    draw(sleepDuration);
+    draw(downSpeed);
     stopAtBottom();
 }
 
