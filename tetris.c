@@ -8,7 +8,8 @@
 #define boardWidth 16
 #define boardHeight 20
 #define nextBoardSize 4
-#define sleepDuration 100
+#define sleepDuration 150
+#define controlSpeed 25
 
 typedef struct loc{
     int index, nextIndex;
@@ -98,7 +99,7 @@ char *piece_I[]  = {
     "0000"
 };
 
-char *piece_S[] = {
+char *piece_Z[] = {
     "1100"
     "0110"
     "0000"
@@ -109,7 +110,7 @@ char *piece_S[] = {
     "0000"
 };
 
-char *piece_Z[] = {
+char *piece_S[] = {
     "0110"
     "1100"
     "0000"
@@ -225,8 +226,8 @@ void drawNextPieceScreen(){
     printf("   Score: %d\n", score);
 }
 
-void draw(){
-    Sleep(sleepDuration);
+void draw(int _sleepDuration){
+    Sleep(_sleepDuration);
     system("cls||clear");
     updateBoard();
     drawNextPieceScreen();
@@ -324,7 +325,7 @@ void stopAtBottom(){
         current.rot = current.nextRot;
         current.nextRot = random(0, numRotations[current.nextIndex] - 1);
         strcpy(currentPiece, PIECES[current.index][current.rot]);
-        draw();
+        draw(sleepDuration);
         addScore();
         gameOver();
     }
@@ -333,7 +334,7 @@ void stopAtBottom(){
 void moveDown(){
     deleteOldConfigurations();
     current.pos+=boardWidth;
-    draw();
+    draw(sleepDuration);
     stopAtBottom();
 }
 
@@ -351,14 +352,14 @@ void moveRight(){
             } 
         }
     }
-    draw();
+    draw(controlSpeed);
 }
 
 void rotate(){
     deleteOldConfigurations();
     current.rot = (current.rot + 1) % numRotations[current.index];
     strcpy(currentPiece, PIECES[current.index][current.rot]);
-    draw();
+    draw(controlSpeed);
 }
 
 void moveLeft(){
@@ -375,7 +376,7 @@ void moveLeft(){
             } 
         }
     }
-    draw();
+    draw(controlSpeed);
 }
 
 void control(){
@@ -404,7 +405,7 @@ void control(){
 void main(){
     srand(time(NULL));
     setCurrentPiece();
-    draw();
+    draw(sleepDuration);
     while(gameOn){
         control();
         moveDown();
