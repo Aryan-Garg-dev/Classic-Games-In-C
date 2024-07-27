@@ -1,5 +1,5 @@
 ## Classic Games 
-## Tic-Tac-Toe (Challenge: You can not beat the AI!!!)
+## 1. Tic-Tac-Toe (Challenge: You can not beat the AI!!!)
 
 Tic-Tac-Toe is a classic two-player game where players take turns marking spaces in a 3x3 grid, attempting to be the first to form a horizontal, vertical, or diagonal line of their symbol ('X' or 'O').
 
@@ -13,7 +13,7 @@ Tic-Tac-Toe is a classic two-player game where players take turns marking spaces
    - Enter the desired move by inputting the corresponding number on your keyboard.
 4. Enjoy playing Tic-Tac-Toe!
 
-## Snake (In terminal using C)
+## 2. Snake (In terminal using C)
 
 Snake is a classic arcade game where the player controls a snake that moves around a bordered playing area, consuming food pellets to grow longer while avoiding collisions with itself and the borders.
 
@@ -29,7 +29,7 @@ Snake is a classic arcade game where the player controls a snake that moves arou
 3. Aim to eat as much food as possible without colliding with the snake's own body or the borders.
 4. Enjoy playing Snake!
 
-## Tetris in C: (CLI)
+## 3. Tetris in C: (CLI)
 
 This C program implements the classic game Tetris in a console interface. Here's a concise overview:
 
