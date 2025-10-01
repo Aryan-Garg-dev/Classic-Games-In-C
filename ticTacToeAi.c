@@ -10,6 +10,7 @@
 #define MIN(a, b) (a<b?a:b)
 #define and &&
 #define or ||
+#define is ==
 #define true 1
 #define false 0
 
@@ -28,6 +29,7 @@ int playerTurn = true; //* to rotate turns
 const int ESC = 27;
 const int ENTER = 13;
 const int SPACE = 32;
+int difficulty = 3; // easy -> 1, medium -> 2, hard -> 3
 
 //draw functions
 void putPieces(int row, int col){
@@ -75,7 +77,11 @@ void startGame(){
     printf("\033[1;34m");
     drawBoard();
     printf("\033[0m\n");
-    printf("Press \033[0;34mENTER\033[0m to start game\n");
+
+    printf("Select Difficulty \n\033[0;34m1.\033[0m Easy \n\033[0;34m2.\033[0m Medium \n\033[0;34m3.\033[0m Hard \nEnter Choice (1-3): ");
+    scanf("%d", &difficulty);
+
+    printf("\nPress \033[0;34mENTER\033[0m to start game\n");
     char ch;
     if (kbhit){
         ch = getch();
@@ -241,6 +247,109 @@ int getTheBestMove(){
     return best;
 }
 
+int evaluate_with_heuristics(){
+    if (checkWin(player)) return +10;
+    if (checkWin(computer)) return -10;
+
+    int score = 0;
+
+    for (int i = 0; i < 8; i++) {
+        int playerCount = 0, computerCount = 0;
+
+        for (int j = 0; j < 3; j++) {
+            int r = WINNING_COMBINATIONS[i][j] / 3;
+            int c = WINNING_COMBINATIONS[i][j] % 3;
+
+            if (board[r][c] == player) playerCount++;
+            else if (board[r][c] == computer) computerCount++;
+        }
+
+        // Only one side can occupy a line
+        if (playerCount > 0 && computerCount == 0) {
+            // The more marks in a line, the stronger the score
+            if (playerCount == 1) score += 1;
+            else if (playerCount == 2) score += 5;
+        } else if (computerCount > 0 && playerCount == 0) {
+            if (computerCount == 1) score -= 1;
+            else if (computerCount == 2) score -= 5;
+        }
+    }
+
+    return score;
+}
+
+int minimax_optmised(int depth, int alpha, int beta, int isPlayer, int maxDepth){
+    int score = evaluate_with_heuristics();
+    if (score == 10 || score == -10) return score;
+    if (!isMovesLeft()) return 0;
+    if (depth >= maxDepth) return score;
+    if (isPlayer){
+        int max = INT_MIN;
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++){
+                char boardChar = board[i][j];
+                if (isdigit(boardChar)){
+                    board[i][j] = player;
+                    int eval = minimax_optmised(depth + 1, alpha, beta, !isPlayer, maxDepth);
+                    max = MAX(max, eval);
+                    alpha = MAX(alpha, eval);
+                    board[i][j] = boardChar;
+                    if (beta <= alpha) break;
+                }
+            }
+        }
+        return max;
+    } else {
+        int min = INT_MAX;
+        for (int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++){
+                char boardChar = board[i][j];
+                if (isdigit(boardChar)){
+                    board[i][j] = computer;
+                    int eval = minimax_optmised(depth + 1, alpha, beta, !isPlayer, maxDepth);
+                    min = MIN(min, eval);
+                    beta = MIN(beta, eval);
+                    board[i][j] = boardChar;
+                    if (beta <= alpha) break;
+                }
+            }
+        }
+        return min;
+    }
+}
+
+int getMaxDepth(){
+    int maxDepth;
+    if (difficulty == 1) maxDepth = 4;  // Easy
+    else if (difficulty == 2) maxDepth = 6;  // Medium
+    else maxDepth = 9;  // Hard (perfect play)
+    return maxDepth;
+}
+
+int getMove(){
+    int best = -1;
+    int min = INT_MAX;
+
+    int maxDepth = getMaxDepth();
+
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++){
+            char boardChar = board[i][j];
+            if (isdigit(boardChar)){
+                board[i][j]=computer;
+                int val = minimax_optmised(0, INT_MAX, INT_MIN, true, maxDepth);
+                board[i][j]=boardChar;
+                if (val < min){
+                    best = 3*i+j;
+                    min = val;
+                }
+            }
+        }
+    }
+    return best;
+}
+
+
 //updateBoard()
 void updateBoard(int move, char piece){
     int row = move / 3;
@@ -281,7 +390,7 @@ void main(){
         } else {
             time_t timeTaken, currTime; //* For uniform response time 
             time(&timeTaken);
-            int move = getTheBestMove();
+            int move = getMove();
             time(&currTime);
             if (difftime(currTime, timeTaken)<0.5){
                 Sleep(500-difftime(currTime, timeTaken)*1000); //* (Better Feedback)
