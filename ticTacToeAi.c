@@ -71,36 +71,12 @@ void setUpBoard(){
     }
 }
 
-//startGame()
-void startGame(){
-    printf("\033[1;32mWelcome to the classic tic-tac-toe game\033[0m\n\n");
-    printf("\033[1;34m");
-    drawBoard();
-    printf("\033[0m\n");
-
-    printf("Select Difficulty \n\033[0;34m1.\033[0m Easy \n\033[0;34m2.\033[0m Medium \n\033[0;34m3.\033[0m Hard \nEnter Choice (1-3): ");
-    scanf("%d", &difficulty);
-
-    printf("\nPress \033[0;34mENTER\033[0m to start game\n");
-    char ch;
-    if (kbhit){
-        ch = getch();
-        if ((int)ch==ENTER){
-            gameOn = true;
-            setUpBoard();
-            system("cls||clear");
-            drawBoard();
-        }
-    }
-}
-
 //resetGame
 void resetGame(){
     gameOn = true;
     playerTurn = true;
     setUpBoard();
 }
-
 
 void gameMenu(){
     printf("\n");
@@ -120,6 +96,36 @@ void gameMenu(){
             printf("Invalid Key Pressed. Try Again...!\n");
             gameMenu();
         }
+    }
+}
+
+//startGame()
+void startGame(){
+    start_game:
+    printf("\033[1;32mWelcome to the classic tic-tac-toe game\033[0m\n\n");
+    printf("\033[1;34m");
+    drawBoard();
+    printf("\033[0m\n");
+
+    
+    printf("Select Difficulty \n\033[0;34m1.\033[0m Easy \n\033[0;34m2.\033[0m Medium \n\033[0;34m3.\033[0m Hard \033[0;34m<DEFAULT>\033[0m \nEnter Choice (1-3): ");
+    scanf("%d", &difficulty);
+    if (difficulty < 0 || difficulty > 3) {
+        system("cls||clear");
+        goto start_game;
+    }
+
+    
+    printf("\nPress \033[0;34mENTER\033[0m to start game\n");
+    char ch;
+    if (kbhit){
+        ch = getch();
+        if ((int)ch==ENTER){
+            gameOn = true;
+            setUpBoard();
+            system("cls||clear");
+            drawBoard();
+        } else gameMenu();
     }
 }
 
@@ -332,20 +338,40 @@ int getMove(){
 
     int maxDepth = getMaxDepth();
 
+    int moves[9];
+    int moveCount = 0;
     for (int i = 0; i < 3; i++){
         for (int j = 0; j < 3; j++){
-            char boardChar = board[i][j];
-            if (isdigit(boardChar)){
-                board[i][j]=computer;
-                int val = minimax_optmised(0, INT_MAX, INT_MIN, true, maxDepth);
-                board[i][j]=boardChar;
-                if (val < min){
-                    best = 3*i+j;
-                    min = val;
-                }
+            if (isdigit(board[i][j])){
+                moves[moveCount++] = 3*i + j;
             }
         }
     }
+
+    srand(time(NULL));
+    int r = rand() % 100; // 0-99
+
+    if (difficulty == 1){ 
+        if (r < 70) return moves[rand() % moveCount];
+        // 30% chance of picking best move
+        
+    } else if (difficulty == 2){ 
+        if (r < 30) return moves[rand() % moveCount];
+        // 70% changce of picking best move
+    }
+
+    for (int i = 0; i < moveCount; i++){
+        int r = moves[i] / 3;
+        int c = moves[i] % 3;
+        board[r][c] = computer;
+        int val = minimax_optmised(0, INT_MIN, INT_MAX, true, maxDepth);
+        board[r][c] = moves[i] + '0';
+        if (val < min){
+            min = val;
+            best = moves[i];
+        }
+    }
+
     return best;
 }
 
