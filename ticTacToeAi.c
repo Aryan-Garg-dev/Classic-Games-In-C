@@ -291,8 +291,8 @@ int minimax_optmised(int depth, int alpha, int beta, int isPlayer, int maxDepth)
     if (depth >= maxDepth) return score;
     if (isPlayer){
         int max = INT_MIN;
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
+        for (int i = 0; i < 3 && beta > alpha; i++){
+            for (int j = 0; j < 3 && beta > alpha; j++){
                 char boardChar = board[i][j];
                 if (isdigit(boardChar)){
                     board[i][j] = player;
@@ -300,15 +300,14 @@ int minimax_optmised(int depth, int alpha, int beta, int isPlayer, int maxDepth)
                     max = MAX(max, eval);
                     alpha = MAX(alpha, eval);
                     board[i][j] = boardChar;
-                    if (beta <= alpha) break;
                 }
             }
         }
         return max;
     } else {
         int min = INT_MAX;
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
+        for (int i = 0; i < 3 && beta > alpha; i++){
+            for (int j = 0; j < 3 && beta > alpha; j++){
                 char boardChar = board[i][j];
                 if (isdigit(boardChar)){
                     board[i][j] = computer;
@@ -316,7 +315,6 @@ int minimax_optmised(int depth, int alpha, int beta, int isPlayer, int maxDepth)
                     min = MIN(min, eval);
                     beta = MIN(beta, eval);
                     board[i][j] = boardChar;
-                    if (beta <= alpha) break;
                 }
             }
         }
